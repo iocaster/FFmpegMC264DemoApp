@@ -66,6 +66,12 @@ The MediaCodec of your device should have the color format YV12 [NV12]. (Other f
   <img src="./FFmpegMC264Demo-Screen.png" width="350" height="720">
 </p>
 
+* App on google play : https://play.google.com/store/apps/details?id=com.iocaster.ffmpegmc264demoapp
+
+<br>
+<br>
+
+
 ## Referenced Links :
 * MediaCodec example :
   - https://android.googlesource.com/platform/cts/+/jb-mr2-release/tests/tests/media/src/android/media/cts/EncodeDecodeTest.java
