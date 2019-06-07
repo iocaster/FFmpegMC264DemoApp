@@ -63,7 +63,7 @@ The MediaCodec of your device should have the color format YV12 [NV12]. (Other f
 
 ## Limitations :
 * The running time is limited to 30 minutes. Contact me for the unlimited version.
-* The video bitrate is limited to 2Mbps.
+
 
 
 ## Screenshot
