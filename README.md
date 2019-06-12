@@ -73,6 +73,13 @@ The MediaCodec of your device should have the color format YV12 [NV12]. (Other f
 
 * App on google play : https://play.google.com/store/apps/details?id=com.iocaster.ffmpegmc264demoapp
 
+
+## Calss Diagram
+<p align="center">
+  <img src="./LibFFmpegMC264.jpg">
+</p>
+
+
 <br>
 <br>
 
