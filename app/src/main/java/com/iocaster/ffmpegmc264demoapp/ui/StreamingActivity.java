@@ -131,6 +131,16 @@ public class StreamingActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "--> onDestroy() : ...");
+        if(ffmpeg_task != null) {
+            mLibFFmpeg.Stop();
+            mLibFFmpeg.ForceStop();
+        }
+    }
+
+    @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
@@ -146,13 +156,11 @@ public class StreamingActivity extends AppCompatActivity
         spinnerContainer.setVisibility(View.VISIBLE);
         spinnerActive = true;
 
-        //String fullUrl = new String("") + urlSrc.getText();
-        String fullUrl = "ffmpeg " + etPreOption.getText() + " -i " + mInput
+        String fullUrl = "dummy_ffmpeg " + etPreOption.getText() + " -i " + mInput
                 + " " + etMainOption.getText()
                 + " " + etOutputOption.getText()
                 + " " + etOutput.getText();
         String[] sArrays = fullUrl.split("\\s+");   //+ : to remove duplicate whitespace
-        //saveCmd(fullUrl);
         Log.d(TAG, "fullUrl = " + fullUrl );
 
         ffmpeg_task = new StreamingActivity.MyTask(this);
@@ -162,9 +170,6 @@ public class StreamingActivity extends AppCompatActivity
     private int stopCnt = 0;
     public void btnStopClicked(View v) {
         Toast.makeText(this, "Stop Clicked !!!", Toast.LENGTH_SHORT).show();
-
-        String fullUrl = mInput;
-        //saveCmd(fullUrl);
 
         mLibFFmpeg.Stop();
         //mLibFFmpeg.Reset();         //Please, call mLibFFmpeg.Reset() inside onPostExecute() not here
