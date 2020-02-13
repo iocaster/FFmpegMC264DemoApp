@@ -1,6 +1,7 @@
 package com.iocaster.ffmpegmc264demoapp;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +10,7 @@ import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
@@ -19,6 +21,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.iocaster.ffmpegmc264demoapp.ui.VideoListActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.lang.ref.WeakReference;
@@ -153,6 +157,16 @@ public class MainActivity extends AppCompatActivity
 
         if( ++stopCnt >= 3 )
             mLibFFmpeg.ForceStop();
+    }
+
+    public void btnUIClicked(View ignored) {
+        /*
+         * launch VideoListActivity.java
+         */
+        Intent convintent = new Intent(MainActivity.this, VideoListActivity.class);
+        convintent.putExtra("folder_name", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath() + "/Camera");
+        convintent.putExtra("folder_short_name", "/DCIM/Camera");
+        startActivity(convintent);
     }
 
     void finished() {

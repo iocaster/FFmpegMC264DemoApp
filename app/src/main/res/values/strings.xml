@@ -7,4 +7,15 @@
     <string name="ffmpeg_cmd_pc0">ffmpeg -v 24 -probesize 0.3M -i rtsp://192.168.123.181/videodevice -vcodec mc264 -b:v 2.0M -r 30 -g 15 -an -max_muxing_queue_size 400 -f flv rtmp://192.168.1.7/show/stream2</string>
     <string name="ffmpeg_cmd_pc1">ffmpeg -v 24 -probesize 0.3M -i rtsp://192.168.123.181/videodevice -vcodec mc264 -b:v 2.0M -r 30 -g 15 -an -max_muxing_queue_size 400 -f mpegts udp://192.168.123.181:5555?pkt_size=1316</string>
 
+    <!-- for UI -->
+    //FileExplorer
+    <string name="default_input"> Choose a file. </string>
+    <string name="internal_storage_name"> Internal Storage Root Directory  </string>
+    <string name="alert_delete_confirm"> Are you sure to delete? </string>
+    <string name="about_dlg_btn_close"> CLOSE </string>
+
+    <!--    <string name="alert_play_or_delete_message"> Play or Delete this file... </string>-->
+    <!--    <string name="alert_button_play"> PLAY </string>-->
+    <!--    <string name="alert_button_delete"> DELETE </string>-->
+
 </resources>
