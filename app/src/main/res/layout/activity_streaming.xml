@@ -80,7 +80,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/layoutOutputOption"
+        android:id="@+id/layoutPostOption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -91,10 +91,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Output Options :" />
+            android:text="Post Options :" />
 
         <EditText
-            android:id="@+id/etOutputOption"
+            android:id="@+id/etPostOption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -108,7 +108,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/layoutOutputOption">
+        app:layout_constraintTop_toBottomOf="@id/layoutPostOption">
 
         <TextView
             android:id="@+id/labelOUTPUT"

@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.iocaster.ffmpegmc264demoapp.R;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
@@ -53,8 +54,9 @@ public class StreamingActivity extends AppCompatActivity
     private ImageView thumbnailView;
     private TextView tvInput;
     private EditText etOutput;
-    private EditText etPreOption, etMainOption, etOutputOption;
+    private EditText etPreOption, etMainOption, etPostOption;
     private String mInput, mOutput;
+    private String mShortFolderName;
 
     private Button btnStart, btnStop;
 
@@ -94,10 +96,11 @@ public class StreamingActivity extends AppCompatActivity
 
         Intent intent = getIntent();
         mInput = intent.getStringExtra("streaming_filename");
+        mShortFolderName = intent.getStringExtra("folder_short_name");
 
         etPreOption = findViewById(R.id.etPreOption);
         etMainOption = findViewById(R.id.etMainOption);
-        etOutputOption = findViewById(R.id.etOutputOption);
+        etPostOption = findViewById(R.id.etPostOption);
 
         tvInput = findViewById(R.id.tvInput);
         etOutput = findViewById(R.id.etOutput);
@@ -110,6 +113,8 @@ public class StreamingActivity extends AppCompatActivity
 
         if( mInput != null ) {
             tvInput.setText(mInput);
+            Bitmap bm = getThumbNail(mInput);
+            if( bm != null ) thumbnailView.setImageBitmap(bm);
         }
 
         mLibFFmpeg = new LibFFmpegMC264();
@@ -158,10 +163,12 @@ public class StreamingActivity extends AppCompatActivity
 
         String fullUrl = "dummy_ffmpeg " + etPreOption.getText() + " -i " + mInput
                 + " " + etMainOption.getText()
-                + " " + etOutputOption.getText()
+                + " " + etPostOption.getText()
                 + " " + etOutput.getText();
         String[] sArrays = fullUrl.split("\\s+");   //+ : to remove duplicate whitespace
         Log.d(TAG, "fullUrl = " + fullUrl );
+
+        btnStart.setEnabled(false);
 
         ffmpeg_task = new StreamingActivity.MyTask(this);
         ffmpeg_task.execute( sArrays );
@@ -177,19 +184,20 @@ public class StreamingActivity extends AppCompatActivity
         if( ++stopCnt >= 3 ) {
             mLibFFmpeg.ForceStop();
             stopCnt = 0;
+            btnStart.setEnabled(true);
         }
     }
 
     private void saveAllOptions() {
         savePreOptions( etPreOption.getText().toString() );
         saveMainOptions( etMainOption.getText().toString() );
-        saveOutputOptions( etOutputOption.getText().toString() );
+        savePostOptions( etPostOption.getText().toString() );
         saveOutput( etOutput.getText().toString() );
     }
     private void loadAllOptions() {
         etPreOption.setText( getPreOptions() );
         etMainOption.setText( getMainOptions() );
-        etOutputOption.setText( getOutputOptions() );
+        etPostOption.setText( getPostOptions() );
         etOutput.setText( getOutput() );
     }
 
@@ -209,12 +217,12 @@ public class StreamingActivity extends AppCompatActivity
         return PreferenceManager.getDefaultSharedPreferences(this).getString("mainOptions", defaultOptions);
     }
 
-    private void saveOutputOptions( String optionStr ) {
-        PreferenceManager.getDefaultSharedPreferences(this).edit().putString( "outputOptions", optionStr ).apply();
+    private void savePostOptions( String optionStr ) {
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putString( "postOptions", optionStr ).apply();
     }
-    private String getOutputOptions() {
+    private String getPostOptions() {
         String defaultOptions = "-f mpegts";
-        return PreferenceManager.getDefaultSharedPreferences(this).getString("outputOptions", defaultOptions);
+        return PreferenceManager.getDefaultSharedPreferences(this).getString("postOptions", defaultOptions);
     }
 
     private void saveOutput( String outputStr ) {
@@ -248,6 +256,25 @@ public class StreamingActivity extends AppCompatActivity
         }
     }
 
+    private Bitmap getThumbNail( String fullpath ) {
+////        File file = new File(fullpath);
+////        CancellationSignal signal = new CancellationSignal();
+////        return ThumbnailUtils.createVideoThumbnail(file, new Size(320,240), signal);
+//        return ThumbnailUtils.createVideoThumbnail(fullpath, MediaStore.Images.Thumbnails.MINI_KIND);
+        return loadBitmap(fullpath);
+    }
+
+    private Bitmap loadBitmap (String fullpath)
+    {
+        File ifile = new File( fullpath );
+        if( !ifile.exists() ) return null;
+
+        String thumbnailFilename = ifile.getName() + ".jpg";
+
+        Bitmap cachedBitmap = VideoListActivity.loadBitmapFromCache( mShortFolderName, thumbnailFilename );
+        return cachedBitmap;
+    }
+
     void finished() {
         Toast.makeText(this, "ffmpeg finished !!!  (retcode = " + ffmpeg_retcode + ")", Toast.LENGTH_SHORT).show();
         spinnerContainer.setVisibility(View.GONE);
@@ -256,6 +283,7 @@ public class StreamingActivity extends AppCompatActivity
         ffmpeg_task = null;
         ffmpeg_retcode = 0;
         stopCnt = 0;
+        btnStart.setEnabled(true);
     }
 
     private static class MyTask extends AsyncTask<String, Void, Void> {

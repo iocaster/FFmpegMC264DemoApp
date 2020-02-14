@@ -189,6 +189,7 @@ public class VideoListActivity extends AppCompatActivity /*BaseActivity*/
                  */
                 Intent convintent = new Intent(VideoListActivity.this, StreamingActivity.class);
                 convintent.putExtra("streaming_filename", makeFullPath(mVideoFileList.get(position)) );
+                convintent.putExtra("folder_short_name", mBaseFolderShortName );
                 startActivity(convintent);
             }
         });
