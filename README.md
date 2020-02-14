@@ -62,6 +62,7 @@ The INPUT stream should have the color format YUV420Planar. Or use '-pix_fmt yuv
 The MediaCodec of your device should have the color format YV12 [NV12]. (Other formats will be supported later)
 
 ## Limitations :
+* It is recommended to use with SD or HD videos. (YUV data copy between Java and JNI is too heavy with Full-HD videos)
 * The running time is limited to 30 minutes. Contact me for the unlimited version of FFmpegMC264 module including source.
 
 
