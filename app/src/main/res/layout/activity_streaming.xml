@@ -76,7 +76,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="-vcodec mc264 -b:v 4.0M -acodec mcaac -b:a 128k" />
+            android:text="-vcodec mc264 -b:v 4.0M -ac 2 -acodec mcaac -b:a 128k" />
     </LinearLayout>
 
     <LinearLayout

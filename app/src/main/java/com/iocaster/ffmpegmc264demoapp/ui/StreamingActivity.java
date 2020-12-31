@@ -218,7 +218,7 @@ public class StreamingActivity extends AppCompatActivity
         PreferenceManager.getDefaultSharedPreferences(this).edit().putString( "mainOptions", optionStr ).apply();
     }
     private String getMainOptions() {
-        String defaultOptions = "-vcodec mc264 -b:v 4.0M -acodec mcaac -b:a 128k";
+        String defaultOptions = "-vcodec mc264 -b:v 4.0M -ac 2 -acodec mcaac -b:a 128k";
         return PreferenceManager.getDefaultSharedPreferences(this).getString("mainOptions", defaultOptions);
     }
 
