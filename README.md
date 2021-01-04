@@ -11,13 +11,13 @@ Instead this library has embedded the ffmpeg as an API function.
 So, you can call the ffmpeg like this : 
 * int retcode = mLibFFmpegMC264.Run(cmdString);
   - cmdString example : 
-  - ffmpeg -i INPUT -vcodec mc264 -acodec mcaac -f mp4 OUTPUT
-  - ffmpeg -i INPUT -vcodec mc264 -b:v 2.0M -acodec mcaac -b:a 128k -f mp4 OUTPUT
-  - ffmpeg -i INPUT -vcodec mc264 -b:v 2.0M -r 30 -g 15 -acodec ac3 -f mp4 OUTPUT
-  - ffmpeg -i INPUT -vcodec mc264 -b:v 2.0M -r 30 -g 15 -acodec aac -b:a 64k -f mp4 OUTPUT
+  - ffmpeg -i INPUT -vcodec mc264 -ac 2 -acodec mcaac -f mp4 OUTPUT
+  - ffmpeg -i INPUT -vcodec mc264 -b:v 2.0M -ac 2 -acodec mcaac -b:a 128k -f mp4 OUTPUT
+  - ffmpeg -i INPUT -vcodec mc264 -b:v 2.0M -r 30 -g 15 -ac 2 -acodec ac3 -f mp4 OUTPUT
+  - ffmpeg -i INPUT -vcodec mc264 -b:v 2.0M -r 30 -g 15 -ac 2 -acodec aac -b:a 64k -f mp4 OUTPUT
   - - aac : '-b:a 64k' recommended or AV sync problem on my device (LG Q6).
-  - ffmpeg -re -i /sdcard/movie.avi -vcodec mc264 -acodec mcaac -f mpegts udp://192.168.0.12:5555?pkt_size=1316&buffer_size=655360
-  - ffmpeg -re -i /sdcard/movie.avi -vcodec mc264 -b:v 2.0M -acodec mcaac -b:a 128k -max_muxing_queue_size 400 -f mpegts udp://192.168.0.12:5555?pkt_size=1316&buffer_size=655360
+  - ffmpeg -re -i /sdcard/movie.avi -vcodec mc264 -ac 2 -acodec mcaac -f mpegts udp://192.168.0.12:5555?pkt_size=1316&buffer_size=655360
+  - ffmpeg -re -i /sdcard/movie.avi -vcodec mc264 -b:v 2.0M -ac 2 -acodec mcaac -b:a 128k -max_muxing_queue_size 400 -f mpegts udp://192.168.0.12:5555?pkt_size=1316&buffer_size=655360
   - - -max_muxing_queue_size 400 : to avoid muxer queue overflow
   - ffmpeg -i rtsp://192.168.0.10/videodevice -vcodec mc264 -an -f mpegts udp://192.168.0.12:5555?pkt_size=1316
   - ffmpeg -probesize 0.3M -fflags nobuffer -use_wallclock_as_timestamps 1 -i rtsp://192.168.0.10/videodevice+audiodevice -vcodec mc264 -an -f mpegts udp://192.168.0.12:5555?pkt_size=1316
@@ -54,16 +54,21 @@ Enjoy ffmpeg powered by MediaCodec HW accelated encoder.
 * mLibFFmpegMC264.Reset();
 
 
-## Supported Color Format :
-* ffmpeg INPUT stream : yuv420p
-* MediaCodec : YV12 [NV12] (MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420SemiPlanar)
+## Supported Color Format of MC264 Video Encoder :
+* YUV format from ffmpeg core to mc264 encoder module should be : yuv420p
+* YUV format from mc264 encoder module to Android MediaCodec can be : 
+  <p>
+   NV12 (MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420SemiPlanar <br> 
+     ==> YUV420 semi planar : [Y1Y2......][Cb1Cr1Cb2Cr2......]) <br>
+   YV12 (MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420Planar <br>
+     ==> YUV420 planar      : [Y1Y2......][Cb1Cb2......][Cr1Cr2.......]) <br> 
+  </p>
 
 The INPUT stream should have the color format YUV420Planar. Or use '-pix_fmt yuv420p' option with INPUT.<br>
-The MediaCodec of your device should have the color format YV12 [NV12]. (Other formats will be supported later)
+The MediaCodec of your device should have the color format of NV12 or YV12.
 
 ## Limitations :
 * It is recommended to use with SD or HD videos. (YUV data copy between Java and JNI is too heavy with Full-HD videos)
-* The running time is limited to 30 minutes. Contact me for the unlimited version of FFmpegMC264 module including source.
 
 
 
