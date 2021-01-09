@@ -26,7 +26,8 @@
 
         <activity android:name=".ui.VideoListActivity" />
         <activity android:name=".ui.FileExplorerActivity" />
-        <activity android:name=".ui.StreamingActivity" />
+        <activity android:name=".ui.StreamingActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

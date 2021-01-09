@@ -226,7 +226,7 @@ public class StreamingActivity extends AppCompatActivity
         PreferenceManager.getDefaultSharedPreferences(this).edit().putString( "postOptions", optionStr ).apply();
     }
     private String getPostOptions() {
-        String defaultOptions = "-f mpegts";
+        String defaultOptions = "-f rtp_mpegts";
         return PreferenceManager.getDefaultSharedPreferences(this).getString("postOptions", defaultOptions);
     }
 
@@ -234,7 +234,7 @@ public class StreamingActivity extends AppCompatActivity
         PreferenceManager.getDefaultSharedPreferences(this).edit().putString( "output", outputStr ).apply();
     }
     private String getOutput() {
-        String defaultOutput = "udp://192.168.219.102:1234?pkt_size=1316";
+        String defaultOutput = "rtp://192.168.219.102:1234?pkt_size=1316";
         return PreferenceManager.getDefaultSharedPreferences(this).getString("output", defaultOutput);
     }
 

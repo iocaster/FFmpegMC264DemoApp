@@ -100,7 +100,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="-f mpegts" />
+            android:text="-f rtp_mpegts" />
     </LinearLayout>
 
     <LinearLayout
@@ -124,7 +124,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="udp://192.168.219.102:1234?pkt_size=1316" />
+            android:text="rtp://192.168.219.102:1234?pkt_size=1316" />
 
     </LinearLayout>
 
