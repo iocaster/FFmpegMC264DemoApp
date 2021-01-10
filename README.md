@@ -82,6 +82,9 @@ The MediaCodec of your device should have the color format of NV12 or YV12.
 
 * App on google play : https://play.google.com/store/apps/details?id=com.iocaster.ffmpegmc264demoapp
 
+* Other Demo (Android Screen Cast Demo with this library to a network device like PC / SmartTV or a media server over RTP, RTMP, UDP, ...) : 
+  https://github.com/iocaster/ScreenCastDemoApp
+
 
 ## Calss Diagram
 <p align="center">
