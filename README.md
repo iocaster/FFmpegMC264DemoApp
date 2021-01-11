@@ -11,23 +11,23 @@ Instead this library has embedded the ffmpeg as an API function.
 So, you can call the ffmpeg like this : 
 * int retcode = mLibFFmpegMC264.Run(cmdString);
   - cmdString example : 
-  - ffmpeg -i INPUT -vcodec mc264 -ac 2 -acodec mcaac -f mp4 OUTPUT
-  - ffmpeg -i INPUT -vcodec mc264 -b:v 4.0M -ac 2 -acodec mcaac -b:a 128k -f mp4 OUTPUT
-  - ffmpeg -i INPUT -vcodec mc264 -b:v 4.0M -r 30 -g 15 -ac 2 -acodec ac3 -f mp4 OUTPUT
-  - ffmpeg -i INPUT -vcodec mc264 -b:v 4.0M -r 30 -g 15 -ac 2 -acodec aac -b:a 64k -f mp4 OUTPUT
+  - dummy_ffmpeg -i INPUT -vcodec mc264 -ac 2 -acodec mcaac -f mp4 OUTPUT
+  - dummy_ffmpeg -i INPUT -vcodec mc264 -b:v 4.0M -ac 2 -acodec mcaac -b:a 128k -f mp4 OUTPUT
+  - dummy_ffmpeg -i INPUT -vcodec mc264 -b:v 4.0M -r 30 -g 15 -ac 2 -acodec ac3 -f mp4 OUTPUT
+  - dummy_ffmpeg -i INPUT -vcodec mc264 -b:v 4.0M -r 30 -g 15 -ac 2 -acodec aac -b:a 64k -f mp4 OUTPUT
   - - aac : '-b:a 64k' recommended or AV sync problem on my device (LG Q6).
   - UDP Streaming : 
-  - - ffmpeg -re -i /sdcard/movie.avi -vcodec mc264 -b:v 4.0M -ac 2 -acodec mcaac -b:a 128k -f mpegts udp://192.168.0.12:5555?pkt_size=1316
-  - - ffmpeg -re -i /sdcard/movie.avi -vcodec mc264 -b:v 4.0M -ac 2 -acodec mcaac -b:a 128k -max_muxing_queue_size 400 -f mpegts udp://192.168.0.12:5555?pkt_size=1316&buffer_size=655360
+  - - dummy_ffmpeg -re -i /sdcard/movie.avi -vcodec mc264 -b:v 4.0M -ac 2 -acodec mcaac -b:a 128k -f mpegts udp://192.168.0.12:5555?pkt_size=1316
+  - - dummy_ffmpeg -re -i /sdcard/movie.avi -vcodec mc264 -b:v 4.0M -ac 2 -acodec mcaac -b:a 128k -max_muxing_queue_size 400 -f mpegts udp://192.168.0.12:5555?pkt_size=1316&buffer_size=655360
   - - - -max_muxing_queue_size 400 : to avoid muxer queue overflow
-  - - ffmpeg -i rtsp://192.168.0.10/videodevice -vcodec mc264 -an -f mpegts udp://192.168.0.12:5555?pkt_size=1316
-  - - ffmpeg -probesize 0.3M -fflags nobuffer -use_wallclock_as_timestamps 1 -i rtsp://192.168.0.10/videodevice+audiodevice -vcodec mc264 -an -f mpegts udp://192.168.0.12:5555?pkt_size=1316
+  - - dummy_ffmpeg -i rtsp://192.168.0.10/videodevice -vcodec mc264 -an -f mpegts udp://192.168.0.12:5555?pkt_size=1316
+  - - dummy_ffmpeg -probesize 0.3M -fflags nobuffer -use_wallclock_as_timestamps 1 -i rtsp://192.168.0.10/videodevice+audiodevice -vcodec mc264 -an -f mpegts udp://192.168.0.12:5555?pkt_size=1316
   - - - -fflags nobuffer -use_wallclock_as_timestamps 1 : to solve AV sync problem
   - RTP Streaming : 
-  - - ffmpeg -re -i /sdcard/movie.avi -vcodec mc264 -b:v 4M -ac 2 -acodec mcaac -b:a 128k -f rtp_mpegts rtp://192.168.0.12:5555
+  - - dummy_ffmpeg -re -i /sdcard/movie.avi -vcodec mc264 -b:v 4M -ac 2 -acodec mcaac -b:a 128k -f rtp_mpegts rtp://192.168.0.12:5555
 
   - generate TV test pattern : 
-  - ffmpeg -f lavfi -i testsrc -pix_fmt yuv420p -vcodec mc264 -b:v 2.0M -r 30 -g 15 -an -f mp4 OUTPUT
+  - dummy_ffmpeg -f lavfi -i testsrc -pix_fmt yuv420p -vcodec mc264 -b:v 2.0M -r 30 -g 15 -an -f mp4 OUTPUT
   
 For this, in C side, two encoder modules - mc264.c / mcaac.c - have been added into ffmpeg libavcodec.<br>
 In java side, two encoder controller classes - MC264Encoder.java / MCAACEncoder.java - have been added over android MediaCodec (H.264 / AAC encoders only).
